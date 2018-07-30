@@ -1,0 +1,223 @@
+day09回顧：
+函數
+  def 函數名(實際參數列表)
+  	  語句塊
+
+函數調用
+	函數名(實際參數列表)
+
+return 語句：
+	return表達式
+
+參數傳遞：
+	位置傳參
+	fn(a,b,c)
+	序列傳參
+	l = [a,b,c]
+	fn(*l)
+	關鍵字傳參
+	fn(a=0, c=1, b=2)
+		字典關鍵字傳參
+		d = {"a":0, "c":1, "b":2}
+		fn(**d)
+
+形參：
+  位置參數
+  不定長形參
+  	星號元組形參
+  	雙星號字典形參
+  命名關鍵字行參
+
+缺省參數
+
+
+day10筆記：
+可變/不可變類型 的實參的參數傳遞區別
+可變：
+  列表list,集合set, 字典dict
+不可變：
+  frozenset, tuple, str, float, int...
+
+問題：
+  函數只能透過返回值傳回數據嗎?
+
+示例1：
+L = []
+def fn(x)
+    x.append(10)
+
+fn(L)
+print(L) #L的值是多少?
+
+fn(L)
+print(L) #[10]
+fn(L)
+print(L) #[10,10]
+
+
+示例2:
+D = {}
+def fn(x) :
+	x['name'] = "tarena"
+
+fn(D)
+print(D)
+
+
+示例3(不可變類型)
+t = (1,2,3)
+def fn(x) :
+	x[1] = 2.2
+
+print(t)
+# fn(t)		# 對元組賦值出錯
+
+
+區別：
+  不可變類型的數據,作為函數參數傳入,函數內部不
+會改變變量的原數據,是安全的
+  可變類型的數據作為參數傳入時,函數內部可以改變原
+  數據,多用返回更多數據結果
+
+函數嵌套：
+	函數嵌套是指一個函數裡用語句來創建其他函數的情況
+
+函數變量
+	函數名是變量,它在創建函數時榜訂一個函數
+
+例：
+	def fn():
+			print("hello")
+	f1 = fn
+	f1()  # 等同於調用函數fn()
+
+嵌套示例：
+def fn_outer(): # 外部函數
+		print("外部函數被調用")
+
+		def fn_inner() :
+				print("fn_inner被調用")
+		fn_inner()
+		fn_inner()
+
+		print("外部函數調用結束")
+
+
+函數作為函數的返回值
+
+例：
+def getfn() :
+		def print_hello():
+				print("hello")
+		return print_hello
+
+fn = getfn()
+fn()
+
+
+函數作為參數傳遞：
+
+示例1：
+  def tab(x, y) :
+  	return "|" + x.center(13) + \
+  	'|' + y.center(13) + "|"
+  def string(x, y) :
+  	return "姓名" + x + "年齡：" + y
+
+  def myprint(fx, x, y) :
+  	print(fx(x, y))
+
+  myprint(tab, "tarena", "15")
+  myprint(tab, "小張", "18")
+
+
+示例2:
+def goodbye(L) :
+	for x in L:
+  		print("再見:", x)
+
+def hello(L) :
+	for x in L:
+		print("你好：", x)
+
+def operator(fn, L)
+	fn(L)
+
+# operator(goodbye, ["張三", "李四"])
+  operator(hello, ["張三", "李四"])
+
+
+全局變量和局部變量
+
+局部變量： 定義在函數內部的變量(包含函數參數)
+全局變量： 定義在函數外部,模塊外部的變量
+
+
+python作用域
+	作用域,也叫名字空間, 是變量訪問時候查找變量名的範圍空間
+
+例：
+v = 100
+def fn()
+	print(v)
+
+fn()
+
+python四個作用域：
+局部作用域(函數內)  Local L
+外部嵌套函數作用域	 Enclosing function locals     E
+函數定義所在模塊(文件)的作用域  Global(module)      G
+Python內置模塊的作用域  Builtin(Python)		   B
+
+變量名的查找規則：
+  在訪問變量時,先查找本地變量,然後是包裹此函數的外部函數
+  的函數內部的變量,之後是全局變量, 最後是內置變量
+  	  L --> E --> G --> B
+
+示例：namespace.py
+
+在默認情況下,變量名賦值會創建或者修改本地變量
+
+v = 100
+def fn():
+	v = 200
+
+fn()
+print(v)
+
+global 語句
+作用：
+	告訴解釋器, global語句的一個或多個變量,這些變量的作
+	用域為模塊級的作用域,也稱全局變量
+	對全局聲明(global)
+	的變量賦值將映身到模塊文件內部作用域
+
+語法：
+	global 變量名1, 變量名2, ...
+
+示例：code/global.py
+
+global說明：
+	1.全局變量如果要在函數內部賦值, 則必須經過全局聲明, 否則被認為是局部變量
+	2.全局變量在函數內部不經過聲明可以直接訪問(前提變量已經存在)
+	3.不能先聲明局部變量,在用global聲明為全局變量,此作法不
+	符合語法規則
+	global變量列表里的變量名不能出現在此作用域的參數列表裡,for循環控制目標,類定義,函數定義及import導入名字中
+
+
+nonlocal語句
+作用：
+  告訴解釋器,nonlocal聲明的變量不是局部變量,也不是全局變量,而是外部嵌套內的變量
+
+
+語法：
+  nonlocal 變量名1, 變量名2,...
+
+示例：見code/nonlocal.py
+
+說明：
+  1. nonlocal語句只能在被嵌套函數的內部進行使用
+  2.訪問nonlocal變量將對外部嵌套函數的作用域內的變量進行
+  操作
+  3. 當有兩層或兩層以上函數嵌套時,訪問nonlocl變量只對最近一層的變量進行操作
+  4. nonlocla語句的變量列表裡的變量名,不能出現在此作用域的參數列表中

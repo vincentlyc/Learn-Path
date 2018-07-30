@@ -1,0 +1,110 @@
+day05筆記：
+
+while語句嵌套
+
+while a > b:
+    while b > c:
+        ....
+else:
+   ....
+
+for循環語句
+　　for語句可以用來遍例序列或可迭代對象的每一個元素
+
+　　可迭代對象包括：
+　　　　　字符串str
+    　列表　list
+    　元組　tuple
+    　字典 dict
+    　集合 set
+    　固定集合 frozenset
+    　迭代器
+
+for語句的語法：
+　　for 變量列表　in 可迭代對象
+　　　　　　語句1
+      ...
+  else:
+      語句2
+      ...
+
+說明：
+　　else子句部份可以省略
+　　語句1的執行次數與可迭代對象的元素有關
+
+示例見：code/for.py
+
+練習：
+　　任意輸入一個字符串,計算要輸入的字符'a'的個數, 並打印
+　　出來
+　　例如：
+　　請輸入： abcdabcabazzzzzz
+  打印4
+
+range()函數
+格式：
+　　見: >>>help(range)
+
+range(stop)
+從零開始,每次生成一個整數,後加1操作, 直到stop(
+不包含stop)
+range(star, stop[, step])
+  start　開始
+  stop 　結束(stop
+  )
+  step  步長
+
+例如：
+　　 range(3)       # 0, 1, 2
+   range(5)       # 0, 1, 2, 3, 4
+   range(1, 3)    # 1, 2
+   range(1, 8, 2) # 1, 3, 5, 7
+   range(5, 0,-1) # 5, 4, 3, 2, 1
+   range(5, 0,-2) # 5, 3, 1
+   range(4, 0)    # 空,啥也沒有
+
+
+   for x in range(0, 10)
+       print(x)
+
+for　語句嵌套：
+示意：
+for x in "abc"
+    for y in "123" :
+        print(x + y)
+
+break語句
+作用：
+　　用於循環語(while, for) 中, 用來中止當前循環語
+句的執行
+
+說明：
+　　　　1. break語句和if語句組合使用
+　　　　2. 當break語句執行後, 此循環語句beack之後的語句將不再執行
+　　　　3. break語句中止循環時, 循環語句的else子句將不會執行
+　　　　4. break語句只能中止當前循環語句的執行, 如有循環
+　　　　嵌套時, 不跳出外重循環 
+
+continue語句
+作用：
+　　用於循環語句(while,for)
+　　中, 不再執行本次循環內的continue
+　　之後的語句,重新開始一次新的循環
+
+示例：
+　　# 10以內的偶數
+　　  用for語句實現　:見continue.py
+    
+    用while語句實現
+    　　見：continue2.py
+說明：
+　　1.在while語句中執行continue,將會直接跳轉
+ 　到while語句真值表達式處重新判讀循環條件
+  2.在for語句執行continue語句,將會從可迭代
+  對象移向下一個元素在進行循環
+
+死循環：
+　　死循環是指循環條件一直成立的循環
+　　死循環通常是用break語句來中止循環
+　　死循環的else子句永遠不會執行
+　　

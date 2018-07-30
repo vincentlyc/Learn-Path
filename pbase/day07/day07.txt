@@ -1,0 +1,229 @@
+day07筆記：
+列表和字符串比較：
+    1.都是序列,有先後順序
+    2.列表示可變,字符串不可變
+    3.列表可以存取任意類型了數,字符串只能存字符
+
+字符串文本解析方法:
+    S.split(sep=None) 將字符串S分割為字符串列表
+    S.join(iterable)
+    將可迭代對象進行拼接,中間用字符串進行分隔
+
+例：
+    s = 'welcome to terena'
+    words = s.split(' ')  #['welcom', 'to', 'tarena']
+
+元組的構造(生成)函數　tuple
+	tuple()			生成一個空元祖等同於()
+	tuple(iterable) 用可迭代對象生成一個元組
+
+元組的算術：
+	算術運算：
+	 + += * *=
+    +  拼接
+    +=　拼接後變量賦值
+    *　　生成重複元組
+    *= 生成重複元組並賦值給變量
+
+例：
+	x = (1,2,3) + (4,5,6)
+	x += (7,)
+
+比較運算：
+　　< <= > >= == !=
+  (1,2,3) < (1,2,4) # True
+  x = (1,2,3)
+  y = 1,3,2
+  x != y  #True
+  x == y  #False
+  x > y   #True
+
+元組的in / not in運算符
+	同字符串和列表的in
+	運算符相同,用於判斷一個值是否存在于原組中, 存在返回True, 不存在返回False
+示例：
+  x = (1, "two", 3.1)
+  2 in x		# False
+  "2" not in x	# True
+
+索引　index
+  等同於字符串的索引規則
+  元組不能索引賦值
+
+切片　slice
+等於字符切片規則
+元組不能切片賦值
+
+可用于序列的函數總結：
+len(s)
+max(s)
+min(s)
+sum(s)
+any(s)
+all(s)
+reversed(seq) 　返回反向順序的迭代器
+sorted(iterable, key=None, reverse=False)
+返回以排序列表
+
+例：
+s = 'ABC'
+# r = reversed(s)
+for x in reversed(s):
+	print(x)
+
+s = "AMCBJ"
+sorted(s)  #['A', 'B', 'C', 'J', 'M']
+
+元組的方法：
+  T.index(v[,begin[,end]])  
+  返回對應的元素下標, begin為開始索引, end為結束索引(不包含ｅnd)
+  T.count(x)  返回元組中對應的元素個數
+
+
+字典　dict
+什麼是字典：
+	1.字典是一種可變得容器, 可以儲存任意類型的數據
+	2.字典中的每個數據都是用"鍵"(key)進行索引,
+	而不像序列可以用下標進行索引
+	3.字典中的數據沒有先後關係.字典的存儲式無序的
+	4.字典的數據是以(key)-值(value)
+	對的形式進行存儲
+	5.字典的表示方式是以{}括起來,以冒號(:)分割
+	的鍵值對,各鍵值對之間用逗號分隔開
+	6.字典的鍵不能重複
+
+
+字典與列表的的比較：
+in / not int :
+列表的in操作每個都進行比較
+字典的in操作不需要比較
+
+
+創建空字典的方法：
+	d = {}  	#　空字典
+	d = dict()	# 空字典
+
+創建非空的字典的方法：
+	d = { "name": "LinYuanChun", "age": 35}
+	d = { "name": None, "age": 1}
+	# 以下寫法可能存在問題fm4
+	d = { "a": 1, "b": 2, "a":1.1} 去掉重複的鍵
+
+字典的值(value)可以為任意類型
+	字典的值可以是布爾值,數據, 字符串, None, 列表, 元組,字典,以及後面藥學到的集合, 函數. 類對象所有類型
+
+例：
+　{"a" :100}
+ {"a" :"abc"}
+ {"a" :True}
+ {"a" :None}
+ {"a" :[1,2,3]}
+ {"a" :(1,2,3)}
+ {"a" :{"aa":11}}
+
+字典的鍵(key) 必須為不可變類型的值
+不可變的類型
+　None, bool, int, str, complex, float, tuple
+　frozenset
+不能充當鍵的類型有：
+　列表list,字典{},集合{後面會講)
+例：
+　{"a":"a"}
+ {100: "100"}
+ {True: "True"}
+ {None : "abc"}
+ {(1970, 1, 1):"comuter years!"}
+
+字典的基本操作：
+字典的訪問：
+　用[]運算符訪問字典內的成員
+　　　字典[鍵]
+例：
+　　d = {"name" : "tarena", "age" :15}
+  print("姓名". d["name"], "年齡：", d["age"])
+
+添加/修改字典的元素
+	字典[鍵]=值
+例：
+　　d = {}
+d['name'] = 'tarena'  # 創建新的的鍵值對
+d['age'] = 15		　　# 創建新的的鍵值對
+d['age'] = 16	      # 修改age鍵所對應的值
+
+鍵不存在,創建鍵,並榜訂對應的值
+鍵存在,修改榜訂的值
+
+商除字典元素 del
+   del 字典[鍵]
+例：
+　　del d['age'] #刪除年齡和其對應的值
+
+獲取中元素的個數：
+　　len(函數) 反為字典的元素(鍵值對)個數
+
+字典的成員資格判斷 in/ not in 運算符
+可以用in /not in 運算符來判斷一個鍵是否存在于字典中
+,如果存在則返回True,否則返回False
+ not in 與　in 相反
+
+ 例：
+ 　d = {'age': 16, "name": 'tarena'}
+  "age" in d # True
+  16 in d 	 # False
+
+   字典的生成函數：
+  dict()	生成一個字典,等同於{}
+  dict(iterable)  用可迭代對象初始化一個字典
+  dict(**kwargs)  關鍵字參數形式生成一個字典
+
+ 例：
+ 　d = dict()
+  d = dict([('name', 'tarena'), ('age', 15)])
+  d = ditc(name="tarena", age=16)
+
+字典的方法：
+　D代表字典的對象
+　D.clear() 清空字典
+　D.pop(key) 移除鍵, 同時返回此鍵所對應的值
+　D.copy()   返回字典D的副本,只複製一層(淺拷貝)
+　D.update(D2) 將字典D2合併到D中,如果鍵相同,則此鍵的
+　值取D2的值作為新值
+　D.get(key, default)
+ 返回鍵key所對應的值, 如果沒有此鍵則返回default
+
+ D.key()   返回可迭代的dict_keys集合對象
+ D.values()返回可迭代的dict_values值對象
+ D.items() 返回可迭代的dict_item對象
+
+
+ D = {1: "1", 2 : "2"}
+ D2 = {2 : "2.1", 3 : "3"}
+ D.update(D2) #D = {1: "1", 2 : "2.2", 3: "3.3"}
+ for k in D.keys():
+ 	print(k)   # 1 2 3
+ 	
+ for v in D.values():
+ 	print(v) # 打印所有的值
+
+ for i in D.item() :
+ 	print(i)
+
+ 打印結果如下:
+ (1, "1")
+ (2, "2")
+ (3, "3")
+
+ for k, v in D.item() :
+ 	print("鍵", k, "--->",v)
+
+字典推導式：輸入五個學生姓名
+語法：
+	(　鍵表達式　: 值表達式　for 變量　in 可迭代對象)
+			(if條件表達式)
+
+示例：
+numbers = [1001, 1002, 1003, 1004]
+names = ["Tom", "Jerry", "Spike" , "Tyke"]
+animals = { numbers[i] : names[i] for i in range(4)}
+animals = { numbers[i] : names[i] for i in range(4) if numbers[i] % 2 == 0}
+

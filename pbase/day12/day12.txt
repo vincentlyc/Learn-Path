@@ -1,0 +1,275 @@
+day11回顧：
+
+lambda 表達式
+globals()
+locals()
+
+eval()
+exec()
+
+閉包 closure
+
+
+函數式編成：
+高階函數
+map(fn, *iterable),返回迭代器
+filter(fn or None, iterable)
+sorted(iterable, key=None, reverse=False)
+例：
+def k(x):
+    return x[::-1]
+sorted(['Tom',"Jerry",key=k]
+
+
+遞歸函數:
+def A():
+    B()
+
+def B():
+    A()
+
+B()
+
+遞歸的用途：
+    文件查找
+    掃雷遊戲
+
+
+day12筆記：
+
+裝飾器 decorator(專業提高篇)
+    裝飾器是一個函數,主要作用是用來包裝另一個函數或類
+
+包裝的目的是在不改變原函數名的情況下,改變被包裝函數(對象)的行為
+
+裝飾器函數
+def 裝飾器函數名(參數)：
+    函數塊
+    return 函數
+
+示例：
+def deco(fn):
+    print("裝飾器函數被調用, 並返回原函數")
+    return fn
+
+帶裝飾器函數語法：
+@ 裝飾器函數名[(裝飾器函數傳參)]<換行>
+def 函數名(參數列表)：
+    語句塊
+
+[]代表可省略
+
+示例：
+def myfunc()
+    print("函數myfunc被調用！")
+
+myfunc()
+
+
+被裝飾函數帶有參數的裝飾器
+
+見: deco2.py
+
+
+函數的文檔字符串：
+語法：
+  def 函數名(參數列表)：
+  	  '函數文檔字符串'
+  	  語句塊
+  	  ...
+
+說明
+  文檔字符串通常用來說明函數的功能和用法
+
+用>>> help(函數名) 可以查看文檔字符串
+例：
+def mymax(a, b):
+   '''mymax函數用於取兩個變量最大值
+   a 形參
+   b 也是形參
+   '''
+   pass
+
+
+已經學過得的函數語法：
+[@裝飾器名]
+def 函數名([位置參數], [*元組參數], [命名關鍵字參數], [**字典參數])：
+  ["文檔字符串"]
+  語句塊
+
+[]代表內部的內容可省略
+
+函數的屬性：
+_name_屬性
+作用：用來紀錄函數名
+說明：
+	以雙下滑線開頭,以雙下滑線結尾的標示符通常代表python的
+特殊屬性等.
+
+示例：
+def abc():
+	pass
+a = abc
+print(a._name_)  # abc
+
+def xxx(fn):
+	if fn._name_ == "abc":
+		pass
+	elif fn._name_ == "max"
+		oass
+
+_doc_ 屬性
+用於紀錄文檔字符串
+示例：
+def cba():
+  	"我是文檔字符串"
+  	pass
+
+補充內容：
+布爾測試
+bool(x) # True/False
+為False的情況為：
+	None
+	False
+	0
+	0.0
+	0+0j
+	[]
+	''
+	()
+	{}
+	set()
+	frozenset()
+
+
+
+
+
+模塊 Module
+什麼是模塊
+	模塊是一個包含有一系列變量, 函數, 類等組成的程序組
+	模塊是一個文件,模塊文件通常以.py結尾
+
+作用：讓一些相關的變量,寒數,類等有邏輯的組織在一起,讓邏輯
+結構更加清晰
+	模塊中的變量,函數和類等可供其他模塊或程序使用
+
+分類：
+	1. 內置模塊(builtins), 在解析器內可直接使用
+	2. 安裝的標準庫模塊,安裝Python時已安裝具可直接使用
+	3. 第三方模塊(通常開源),需要自己安裝
+	4. 用戶自己編寫的模塊(可以為其他人的第三方模塊)
+
+模塊的倒入：
+1. import 語句
+	import 模塊名1 [as 模塊新名1][, 模塊名2 [as 模塊新名2]] ...
+
+例如：
+  # 導入數據模塊
+  import math
+  # 導入系統sys模塊
+  import sys, os
+
+ 用法：
+ 	模塊名,屬性名
+ 	math.factorial(5) #求5的階層
+ 	點
+
+ help(object) 函數, 可以查看模塊相關的文檔字符串
+ dir(object) 函數, 可以查看模塊的所有屬性
+
+
+
+ from import 語句
+ 語法
+ 	from 模塊名 import 模塊屬性名1 [as 屬性別名1],
+ 	模塊屬性名2 [as 屬性別名2],...
+
+ 作用：
+ 	將模塊內的一個或多個變量導入到當前模塊
+
+ 示例：
+ 	from math import sin
+ 	from math import pi
+ 	from math import factorial as fac
+
+
+
+from import * 語句
+語法：
+  from 模塊名 import *
+作用：
+  將某模塊的所有屬性導入到當前模塊
+  
+示例：
+  from math import *
+  sin(pi/2) #1.0
+
+
+dir()函數
+  dir([對象]) 返回一個字符串列表
+作用：
+  如果沒有參數調用,則返回當前作用域內的所有變量的列表
+  如果給定一個對象作為參數,則返回這個對象的所有變量列表
+    對於模塊,返回這個模塊的全部變量
+    對於類,返回類對象的所有變量
+    對於其他對象,返回所有變量,類變量和基類變量
+
+內置模塊：
+  builtins, sys, time, itertools,...,math
+標準庫模塊
+ random, datetime, os, xml...
+
+http://docs.python.org
+
+
+時間模塊 time
+	此模塊提供了時間相關的函數,且一直可用
+導入方式：
+	import time
+	form time import *
+	from time import xxx
+
+時間簡介：
+	公元紀年是公元0000年1月1日開始
+	對於Unix/Linux系統,計算機元年是從1970-1-1
+	零時開始的, 此時時間為0
+	UTC時間(Coordinated Universal Time)
+	是從 Greenwich 時間開始計算的：
+	UTC時間不會殷實區問題而產生錯誤
+
+	DST陽光節約日(Daylight Saving Time),
+	又稱夏令時,是經過日照時間修正後的時間
+
+
+時間元組：
+是一個9個整數組成的,這九個元素自前至后依次為：
+	四位的年(如：1993)
+	月(1-12)
+	日(1-31)
+	時(0-23)
+	分(0-59)
+	秒(0-59)
+	星期幾(0-6, 週一是0)
+	元旦開始日(1-366)
+	夏令時修正時間為(-1, 0, 或 1)
+注：
+	如果年份小於100,則會自動轉換為加上1900後的值
+
+模塊中的變量和函數
+變量
+time.timezone 本地時間與UTC時間差(秒為單位)
+time.altzone  夏令時間與UTC時間差(秒為單位)
+time.daylight 夏令時校正時間
+time.tzname	  時區名稱的元組
+
+函數：
+time.time()  從返回計算機元年至當前時間的秒數的浮點數(UTC時間為準)
+time.sleep(secs) 按程序給定的秒數睡眠一段時間
+time.gmtime([sec]) 將給定的秒數轉換為UTC表達的時間元組
+time.mktime(tuple) 將時間元組轉換為新紀元秒數時間(UTC為準)
+time.asctime([tuple]) 將時間元組轉換為字符串
+time.localtime([secs]) 將UTC秒數轉換為時間元組(以本地時間為準)
+time.clock() 返回自CPU開始運行到現在的時間秒數的浮點數
+
+[] 裡的內容代表可省略

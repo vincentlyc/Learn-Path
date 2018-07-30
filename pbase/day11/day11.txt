@@ -1,0 +1,267 @@
+day10回顧：
+函數：
+  可變 和不可變參數
+
+函數嵌套：
+def xxxx():
+	def yyy():
+		pass
+
+函數作為函數的返回值
+函數作為函數的參數傳遞
+
+全局變量
+	一直存在
+局部變量
+	函數執行時存在,執行完畢後將銷毀
+
+作用域
+	局部
+	外部嵌套函數作用域
+	模塊級(全局)
+	內部模塊作用域
+
+global 語句
+
+nonlocal 語句
+
+
+day11筆記：
+	lambda 表達式 (又稱匿名函數對象)
+作用：
+  創建一個匿名(無名)函數
+  同def類似.但不提供函數名
+
+語法：
+  lambda [參數1, 參數2, ....] : 表達式
+  注: []內的部份可以省略
+
+ 例： 
+ def myadd(x.y) :
+ 	 return x + y
+
+ # 可以改寫為:
+ myadd = lambda x, y : x + y
+ print("20+30=", myadd(20, 30))
+
+ 練習看懂如下代碼：
+def operator(fn, x, y)：
+	return fn(x,y)
+		   ^
+		 把fn看作lambda帶入
+
+operator((lambda a,b: a+b), 100,200)
+operator((lambda a,b: a*b), 100,200)
+
+語法說明：
+  lambda只是一個表達式,它用來創建函數對象
+  當lambda表達式執行(調用)時,返回的是冒號(:)後表達式的值
+  lambda表達式創建的函數只能包含一條語句
+  lambda比函數簡單可以隨時創建和銷毀
+  lambda有利於減少程序耦合度
+
+
+ globals() /locals()函數
+ globals() 返回當前全局作用域內變量的字典
+ locals()  返回當前局部作用域內變量的字典
+
+
+ 示例：
+a = 1
+b = 2
+def fn(c, d):
+	e = 300
+	print("locals返回：", locals())
+	print("globals返回：", globals())
+
+fn(100, 200)
+
+
+eval() , exec()函數
+
+eval()函數作用：
+	把一個字符串當成表達式來執行, 返回表達式執行後的結果
+
+eval() 格式：
+  eval(source, globals = None, local=None)
+
+示例：
+x = 100
+y = 200
+a = eval( "x+y")
+print(a)  # 300
+
+local_scope = {"x":5, "y":10}
+a = eval("x+y", None, local_scope)
+print("a=", a)
+
+z = 300
+a = eval("x*y+z", {"z":3333}, local_scope)
+print(a)
+
+
+exec()函數：
+作用：
+  把一個字符串當作程序來執行
+格式： 
+  exec(source, globals=None, locals = None)
+ 注: globals, locals的作用同eval
+
+ 例：
+ x = 100
+ y = 200
+ s = "print('hello:', x, y)"
+ exec(s) # hello: 100, 200
+
+ gs = {"x":10, "y":20}
+ ls = {"x":1, "y":2}
+ exec("z = x + y", gs, ls)
+ print(ls) #{"x":1, "y":2, "z":3}
+ {'z': 3, 'y': 2, 'x':1}
+
+
+閉包 closure
+ 將組成函數的語句和這些語句的執行環境打包在一起時,得到的對象稱為閉包
+
+說明：
+  如果一個內嵌函數訪問函數外部作用域變量,則這個函數就是閉包
+例：
+def make_power(x):
+	def fn(arg):
+		return arg ** x
+	return fn
+
+f2 = make_power(2)
+
+y = f2(100) #10000
+
+f3 = make_power(3)
+f3(3)  # 27
+f4 = make_power(4)
+f4(2)  # 16
+
+函數式編程：
+  是指用一系列函數解決問題
+
+函數是一等公民：
+
+函數式編成的好處：
+  每一個函數完成細小的功能,一系列函數的任意組合可以完大問題
+  函數全接收輸入並產生輸出,不包含任何可能影輸出內部狀態
+
+函數的可重入性：
+  可重入性是指輸入一定,則輸出必須一定
+
+例：
+
+
+#不可重入的函數：
+y = 200
+def myadd(x) :
+	return x + y
+
+print(myadd(10)) # 210
+
+y = 300
+
+print(myadd(10)) # 310
+
+#可重入的函數：
+def add(x, y):
+	return x + y
+
+優點：
+易於測試
+易於調適
+更高的生產率
+模塊化
+邏輯可證
+
+高階函數：
+什麼是高階函數：
+	滿足下列條件的一個的函數即為高階函數：
+	1.函數接受一個或多個函數作為參數傳入
+	2.函數返回一個函數
+
+Python中內置(builtins)的高階函數
+	map, filter, sorted
+
+map函數:
+	map(func, *iterable) 用函數和可迭代對象中的每個元素作為參
+	數計算出新的可迭代對象,當最短的一個可迭代對象完成迭代後,此迭代
+	生成結束
+
+例:
+	def power2(x):
+		return x**2
+
+	#生成一個迭代器,此迭代器可以生成1~9的自然數平方
+	# 1 4 9 16
+	mit = map(power2, range(1, 10))
+	for x in mit :
+		print(x, end=" ")
+
+	#生成一個迭代器,此迭代器可以生成1*4, 2*3, 3*2, 4*1這樣的數
+
+	def mymul(x, y):
+		return x*y
+	mit = map(mymul, [1,2,3,4], [4,3,2,1])
+	[x for x in mit] # [4,6,6,4]
+
+
+filter 函數 :
+	filter(function or none, iterable)
+作用：
+	塞選序列中的數列,返回一個可迭代對象,此可迭代杜象將對iterable進行篩選
+
+說明：
+	function將對iterable中的每個元素進行求值,返回False則
+	將此數據丟棄,返回True,則保留此數據
+示例：
+	L = [x for x in range(10)] #[0,1,2,3,...9]
+	def isodd(x) :
+		return x % 2 == 1
+	L2 = [x for x in filter(isodd, range(10))]
+
+
+sorted 函數：
+作用：
+	將原可迭代對象的數據進行排列, 生成排序後的列表
+格式：
+	sorted(iterable, key=None, reverse=False)
+說明：
+	key函數用來提供一個值,這個值將作為排序的依據
+示例：
+	L = [5, -2, -4, 0, 3, 1]
+	L2 = sorted(L) # [-4, -2, 0, 1, 3, 5]
+	L2 = sorted(L, reverse = True) #[5,3,1...]
+	L2 = sorted(L. key=abs)        #[0, 1, -2, 3,-4, 5]
+	names = ['Tom', 'Jerry', 'Spike', 'Tyke']
+	sorted(names)
+	sorted(names, ken= len)
+	思考
+	排序依據為：
+		'moT', 'yrreJ', 'ekips', 'ekyT'
+	def k(x):
+		return x[::-1]
+練習將k函數 寫成lambda表達式
+	sorted(names, key = lmbda x : [::-1])
+
+
+遞歸函數 recursion
+ 函數直接或間接的調用自身
+
+示例：
+def f():
+	print("hello")
+	f()
+
+f()  # 調用自身
+print('遞歸完成')
+
+說明：
+	遞歸一定要控制遞歸的層數,當符合某一條件時要中止遞歸調用
+	幾乎所有的遞歸都能用while循環來代替
+優缺點：
+	優點：可以把問題簡化,讓思路更清晰,代碼更簡潔
+	缺點：遞歸因系統環境影響大,當遞歸深度太大,可能會得到不可預知的結果
