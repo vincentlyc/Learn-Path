@@ -1,0 +1,13 @@
+day15筆記：
+迭代器 iterator 和生成器 generator
+
+什麼是迭代器
+	迭代器是指用iter(可迭代對象) 函數返回的對象(實例)
+	迭代器可以用next(it) 函數獲取可迭代對象的數據
+
+迭代器函數：
+	iter(iterable)
+	從可迭代對象中返回一個迭代器,iterable必
+	需是一個能提供迭代器的可迭代對象
+	next(iterator)
+    
